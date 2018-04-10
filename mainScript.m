@@ -56,7 +56,7 @@ size(d)
 %calculate laplacian matrix
 L = D - A;
 
-%
+%get eigenvectors (U) and eigenvalues(lambda)
 [U, lambda] = eig(L);
 
 
@@ -86,6 +86,26 @@ xlabel('$$\lambda_l$$','Interpreter','Latex');
 ylabel('$$\hat{f}(\lambda_l)$$','Interpreter','Latex');
 
 lambda_vector
+
+%reconstructed graph signal
+f = zeros(N,1);
+
+%compute inverse fourier transform
+for i = 1:N
+    sum = 0;
+    for j = 1:N
+        sum = sum + U(i,j)*F(j);
+    end
+    f(i) = sum;
+end
+
+figure(2)
+nodes = 1:N;
+stem(nodes, f);
+title("Recovered Graph Signal from Inverse Fourier Transform");
+xlabel("Graph Vertices, Vi");
+ylabel("f(Vi)");
+
 
 
 
