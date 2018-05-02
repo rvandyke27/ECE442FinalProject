@@ -67,8 +67,6 @@ L = D - A;
 %get eigenvectors (U) and eigenvalues(lambda)
 [U, lambda] = eig(L);
 
-
-
 size(A);
 size(U);
 N = length(d);
@@ -94,7 +92,7 @@ title("Graph Fourier Transform for Signal as Degree Matrix");
 xlabel('$$\lambda_l$$','Interpreter','Latex');
 ylabel('$$\hat{f}(\lambda_l)$$','Interpreter','Latex');
 
-lambda_vector
+disp(lambda_vector);
 U(:,1);
 
 %reconstructed graph signal
@@ -131,10 +129,11 @@ for i=1:length(Ac(:,1))
 end
 
 
-% %random test filter
-%  h = transpose([1 1 0.5]);
-% %random test filter
-%  H = h(1)*S^0 + h(2)*S^1 + h(3)*S^2;
+%random test filter
+ h = transpose([1 1 0.5]);
+%random test filter
+%H = h(1)*S^0 + h(2)*S^1 + h(3)*S^2;
+
 
 x = transpose(signal);
 lambda_max = max(lambda_vector);
@@ -158,12 +157,13 @@ Y1 = S1*x;
 Y2 = (S2)^N*x;
 Y3 = S3*x;
 Y4 = S4*x;
+
 % Yh = H*x;
 
 %Plotting shifted graph signal
 figure(3)
 hold on
-stem(nodes, Y2, 'r');
+stem(nodes, Y1, 'r');
 title("Shifted");
 hold off
 

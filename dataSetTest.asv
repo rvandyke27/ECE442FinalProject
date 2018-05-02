@@ -1,0 +1,18 @@
+%Testing with additional data sets
+
+[A, D, sig] = getGraphFromGML("karate.gml");
+
+L = D - A;
+
+%get eigenvectors (U) and eigenvalues(lambda)
+[U, lambda] = eig(L);
+
+size(A);
+size(U);
+N = length(d);
+F = zeros(N, 1);
+lambda_vector = zeros(N,1);
+
+for i = 1:N
+    lambda_vector(i) = lambda(i,i);
+end

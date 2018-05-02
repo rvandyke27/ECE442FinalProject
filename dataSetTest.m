@@ -1,0 +1,51 @@
+%Testing with additional data sets
+
+[A, D, sig] = getGraphFromGML("karate.gml");
+
+L = D - A;
+
+%get eigenvectors (U) and eigenvalues(lambda)
+[U, lambda] = eig(L);
+
+size(A);
+size(U);
+N = length(d);
+F = zeros(N, 1);
+lambda_vector = zeros(N,1);
+
+for i = 1:N
+    lambda_vector(i) = lambda(i,i);
+end
+
+for i = 1:N  
+    F(i, 1) = dot(sig, U(:,i));
+end
+
+figure(1)
+stem(lambda_vector(1:length(lambda_vector)), F(1:length(F)));
+title("Graph Fourier Transform for Signal as Degree Matrix");
+xlabel('$$\lambda_l$$','Interpreter','Latex');
+ylabel('$$\hat{f}(\lambda_l)$$','Interpreter','Latex');
+
+disp(lambda_vector);
+U(:,1);
+
+%reconstructed graph signal
+f = zeros(N,1);
+
+%compute inverse fourier transform
+for i = 1:N
+    sum = 0;
+    for j = 1:N
+        sum = sum + U(i,j)*F(j);
+    end
+    f(i) = sum;
+end
+
+%plot recovered plot 
+figure(2)
+nodes = 1:N;
+stem(nodes, f);
+title("Recovered Graph Signal from Inverse Fourier Transform");
+xlabel("Graph Vertices, Vi");
+ylabel("f(Vi)");
