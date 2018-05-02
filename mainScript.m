@@ -192,6 +192,7 @@ for l = 1:length(hp)
 end
 
 
+
 hf = transpose(vmonde)*hp;
 
 Hf = U*diag(hf)*inv(U);
@@ -203,7 +204,18 @@ stem(nodes, Yhf);
 title("Filtering (Frequency)")
 
 
+%Sampling
 
+P = 14;
+K = 17;
+C = eye(N);
+C = C(1:P,:);
+xs = C*x;
 
+Vk = U(:,1:K);
+xr = Vk*transpose(C*Vk)*xs;
+figure(6)
+stem(xr);
+title("Recovered Graph Signal");
 
 
