@@ -1,7 +1,8 @@
-%Testing with additional data sets
+function [ f ] = iGFT( F, U, N )
+%iGFT computes and displays inverse graph Fourier transform given
+% eigenvectors and eigenvalues, graph signal, and N
 
-[A, D, sig] = getGraphFromGML("karate.gml");
-N = length(A);%reconstructed graph signal
+%reconstructed graph signal
 f = zeros(N,1);
 
 %compute inverse fourier transform
@@ -21,11 +22,5 @@ title("Recovered Graph Signal from Inverse Fourier Transform");
 xlabel("Graph Vertices, Vi");
 ylabel("f(Vi)");
 
-L = D - A;
+end
 
-%get eigenvectors (U) and eigenvalues(lambda)
-[U, lambda] = eig(L);
-
-F = GFT(U, lambda, sig, N);
-
-f = iGFT(F, U, N);

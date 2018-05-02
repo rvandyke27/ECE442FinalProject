@@ -1,5 +1,5 @@
 function [ A, D, sig] = getGraphFromGML( fileName )
-%Returns A, adjacency matrix of graph from GML file
+%getGraphFromGML Returns A, adjacency matrix of graph from GML file
 %d, degree matrix
 %and sig, graph signal values computed by in-degree
 
