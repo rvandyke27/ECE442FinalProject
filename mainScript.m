@@ -183,10 +183,9 @@ stem(nodes, Yhp);
 title("Filtering (Polynomial)");
 
 %frequency response of filter
+vmonde = zeros(length(hp), N);
 
-vmonde = zeros(length(h), N);
-
-for l = 1:length(h)
+for l = 1:length(hp)
     for k = 1:N
         vmonde(l,k) = lambda_e(k)^(l-1);
     end
