@@ -226,7 +226,13 @@ timestamp = transpose(csvread(excelfile,1,0,[1 0 1616 0]));
 x = transpose(csvread(excelfile,1,1,[1 1 1616 1]));
 y = transpose(csvread(excelfile,1,2,[1 2 1616 2]));
 rssi = transpose(csvread(excelfile,1,4,[1 4 1616 4]));
-sample = 1:5:1616;
+% Set RSSI values low to -100
+for i=1:length(rssi)
+    if rssi(i) == 0
+        rssi(i) = -100;
+    end
+end
+sample = 100:2:1616;
 rssi_samples = rssi(sample);
 Nodes = 1:length(rssi_samples);
 coord = [x(sample); y(sample)];
@@ -238,7 +244,7 @@ for i=1:length(Nodes)
         
         distance = sqrt((coord(1,i) - coord(1,j))^2 + (coord(2,i) - coord(2,j))^2);
         if(distance > 0)
-            A_cmr(i,j) = 1/distance;
+            A_cmr(i,j) = 1/sqrt(distance);
         end
         
 
@@ -299,4 +305,6 @@ ylabel("f(Vi)");
 
 figure(9)
 stem(Nodes, rssi_samples(1,:))
+
+
 
