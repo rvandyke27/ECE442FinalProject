@@ -131,19 +131,21 @@ for i=1:length(Ac(:,1))
 end
 
 
-%random test filter
- h = transpose([1 1 0.5]);
-%random test filter
- H = h(1)*S^0 + h(2)*S^1 + h(3)*S^2;
+% %random test filter
+%  h = transpose([1 1 0.5]);
+% %random test filter
+%  H = h(1)*S^0 + h(2)*S^1 + h(3)*S^2;
 
 x = transpose(signal);
 lambda_max = max(lambda_vector);
-lambda_e = zeros(length(N));
+
 
 %working on energy perserving shifting
-for k = 1:N
-    lambda_e(k) = exp(j*(-2*pi*(k-1))/N);
-end
+k = 1:N;
+lambda_e = exp(1i*((-2*pi*(k-1))/N));
+    
+
+
 
 %trying some different things for shift operators
 Aphi = U*diag(lambda_e)*inv(U);
@@ -153,10 +155,10 @@ S3 = L;
 S4 = A;
 
 Y1 = S1*x;
-Y2 = S2*x;
+Y2 = (S2)^N*x;
 Y3 = S3*x;
 Y4 = S4*x;
-Yh = H*x;
+% Yh = H*x;
 
 %Plotting shifted graph signal
 figure(3)
@@ -164,6 +166,44 @@ hold on
 stem(nodes, Y2, 'r');
 title("Shifted");
 hold off
+
+%Graph filters
+
+%polynomial filter stuff
+hp = transpose([1 1 1]);
+Hp = zeros(size(S1));
+
+for l = 1:length(hp)
+    Hp = Hp + (hp(l)*S2^(l-1));
+end
+
+Yhp = Hp*x;
+figure(4)
+stem(nodes, Yhp);
+title("Filtering (Polynomial)");
+
+%frequency response of filter
+
+vmonde = zeros(length(h), N);
+
+for l = 1:length(h)
+    for k = 1:N
+        vmonde(l,k) = lambda_e(k)^(l-1);
+    end
+end
+
+
+hf = transpose(vmonde)*hp;
+
+Hf = U*diag(hf)*inv(U);
+
+Yhf = Hf*x;
+
+figure(5)
+stem(nodes, Yhf);
+title("Filtering (Frequency)")
+
+
 
 
 
