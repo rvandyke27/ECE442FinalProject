@@ -134,17 +134,12 @@ end
 %random test filter
 %H = h(1)*S^0 + h(2)*S^1 + h(3)*S^2;
 
-
 x = transpose(signal);
 lambda_max = max(lambda_vector);
-
 
 %working on energy perserving shifting
 k = 1:N;
 lambda_e = exp(1i*((-2*pi*(k-1))/N));
-    
-
-
 
 %trying some different things for shift operators
 Aphi = U*diag(lambda_e)*inv(U);
