@@ -8,7 +8,7 @@ inputfile = fopen(fileName);
 
 l=0;
 k=1;
-
+G = [];
 while 1
     % Get a line from the input file
     tline = fgetl(inputfile);
@@ -18,7 +18,7 @@ while 1
     end
     
     nums = regexp(tline,'\d+','match');
-    G = [];
+ 
     if ~isempty(nums)
         if l==1
             l=0;
