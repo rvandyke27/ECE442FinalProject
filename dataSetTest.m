@@ -1,6 +1,6 @@
 %Testing with additional data sets
 
-[A, D, sig] = getGraphFromGML("netscience.gml");
+[A, D, sig] = getGraphFromGML("karate.gml");
 
 L = D - A;
 
@@ -9,7 +9,7 @@ L = D - A;
 
 size(A);
 size(U);
-N = length(d);
+N = length(A);
 F = zeros(N, 1);
 lambda_vector = zeros(N,1);
 
