@@ -9,10 +9,7 @@ inputfile = fopen(fileName);
 l=0;
 k=1;
 G = [];
-<<<<<<< HEAD
-=======
 
->>>>>>> 77d08736a6c158f21494e0ac7785024e031f6c3a
 while 1
     % Get a line from the input file
     tline = fgetl(inputfile);
@@ -22,12 +19,10 @@ while 1
     end
     
     nums = regexp(tline,'\d+','match');
-<<<<<<< HEAD
+
  
     if ~isempty(nums)
-=======
-    if length(nums)
->>>>>>> 77d08736a6c158f21494e0ac7785024e031f6c3a
+
         if l==1
             l=0;
             G(k,2)=str2double(nums{1});  
