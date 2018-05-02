@@ -9,7 +9,7 @@ L = D - A;
 
 size(A);
 size(U);
-N = length(d);
+N = length(A);
 F = zeros(N, 1);
 lambda_vector = zeros(N,1);
 
@@ -17,8 +17,10 @@ for i = 1:N
     lambda_vector(i) = lambda(i,i);
 end
 
+disp(size(sig));
+
 for i = 1:N  
-    F(i, 1) = dot(sig, U(:,i));
+    F(i, 1) = dot(transpose(sig), U(:,i));
 end
 
 figure(1)

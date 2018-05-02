@@ -9,6 +9,10 @@ inputfile = fopen(fileName);
 l=0;
 k=1;
 G = [];
+<<<<<<< HEAD
+=======
+
+>>>>>>> 77d08736a6c158f21494e0ac7785024e031f6c3a
 while 1
     % Get a line from the input file
     tline = fgetl(inputfile);
@@ -18,8 +22,12 @@ while 1
     end
     
     nums = regexp(tline,'\d+','match');
+<<<<<<< HEAD
  
     if ~isempty(nums)
+=======
+    if length(nums)
+>>>>>>> 77d08736a6c158f21494e0ac7785024e031f6c3a
         if l==1
             l=0;
             G(k,2)=str2double(nums{1});  
@@ -41,8 +49,6 @@ for i=1:length(G)
     A(G(i,2)+1,G(i,1)+1) = 1;
 end
 
-A
-
 Auw = zeros(size(A));
 
 %size(A)
@@ -61,9 +67,9 @@ end
 D = diag(transpose(d));
 
 %define graph signal (popularity)
-sig = zeros(size(A, 1));
+sig = zeros(size(A, 1), 1);
 for i=1:length(sig)
-   sig(i) = sum(A(i, :)); 
+   sig(i, 1) = sum(A(i, :)); 
 end
  
 end
