@@ -206,8 +206,10 @@ title("Filtering (Frequency)")
 
 %Sampling
 
-P = 14;
-K = 17;
+
+%Selection Sampling
+P = 16;
+K = 15;
 C = eye(N);
 C = C(1:P,:);
 xs = C*x;
@@ -217,5 +219,21 @@ xr = Vk*transpose(C*Vk)*xs;
 figure(6)
 stem(xr);
 title("Recovered Graph Signal");
+
+%Aggregation Sampling
+
+
+%-----------------------------------------------------------
+%-----------------------------------------------------------
+
+excelfile = 'gavett_long_02_edit2.csv';
+timestamp = transpose(csvread(excelfile,1,0,[1 0 1616 0]));
+x = transpose(csvread(excelfile,1,1,[1 1 1616 1]));
+y = transpose(csvread(excelfile,1,2,[1 2 1616 2]));
+rssi = transpose(csvread(excelfile,1,4,[1 4 1616 4]));
+sample = 60:2:800;
+rssi_samples = rssi(sample);
+Nodes = 1:length(rssi_samples);
+coord = [x(sample) y(sample)];
 
 
