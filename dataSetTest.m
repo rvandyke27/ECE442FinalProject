@@ -1,6 +1,6 @@
 %Testing with additional data sets
 
-[A, D, sig] = getGraphFromGML("karate.gml");
+[A, D, sig] = getGraphFromGML("netscience.gml");
 
 L = D - A;
 
@@ -17,8 +17,10 @@ for i = 1:N
     lambda_vector(i) = lambda(i,i);
 end
 
+disp(size(sig));
+
 for i = 1:N  
-    F(i, 1) = dot(sig, U(:,i));
+    F(i, 1) = dot(transpose(sig), U(:,i));
 end
 
 figure(1)
