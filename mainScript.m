@@ -37,10 +37,13 @@
 %  end
 %  
 
-
+%use kangaroo data set
 file = importdata("kangaroo.dat");
 A = file.data;
-Auw = zeros(size(A))
+
+%unweighted adjacency matrix
+Auw = zeros(size(A));
+
  %size(A)
 d = zeros((length(A(1,:))),1);
 deg = zeros(size(A));
@@ -57,6 +60,7 @@ end
 
 D = diag(transpose(d));
 size(d);
+
 %calculate laplacian matrix
 L = D - A;
 
@@ -105,6 +109,7 @@ for i = 1:N
     f(i) = sum;
 end
 
+%plot recovered plot 
 figure(2)
 nodes = 1:N;
 stem(nodes, f);
@@ -113,22 +118,6 @@ xlabel("Graph Vertices, Vi");
 ylabel("f(Vi)");
 
 
-% Ac = ifft( fft( diag( fft(signal) ), [], 1 ), [], 2 );
-% 
-% Ac
-% for i=1:length(Ac(:,1))
-%  for j=1:length(Ac(1,:))
-%      if(Ac(i,j) > 0)
-%          Ac(i,j) = 1;
-%      
-%      else
-%          Ac(i,j) = 0;
-%      end
-%      
-%  end
-%  
-%   
-%  end
 
  
 Ac = zeros(size(A));
@@ -141,20 +130,22 @@ for i=1:length(Ac(:,1))
  end
 end
 
-S = L;
-% 
+
+%random test filter
  h = transpose([1 1 0.5]);
-% 
+%random test filter
  H = h(1)*S^0 + h(2)*S^1 + h(3)*S^2;
-% Y = S*transpose(signal)
+
 x = transpose(signal);
 lambda_max = max(lambda_vector);
 lambda_e = zeros(length(N));
 
+%working on energy perserving shifting
 for k = 1:N
     lambda_e(k) = exp(j*(-2*pi*(k-1))/N);
 end
 
+%trying some different things for shift operators
 Aphi = U*diag(lambda_e)*inv(U);
 S1 = Ac;
 S2 = Aphi;
@@ -166,14 +157,14 @@ Y2 = S2*x;
 Y3 = S3*x;
 Y4 = S4*x;
 Yh = H*x;
+
+%Plotting shifted graph signal
 figure(3)
 hold on
 stem(nodes, Y2, 'r');
-title("Shift");
+title("Shifted");
 hold off
 
 
-
-Y = S^20*x;
 
 
