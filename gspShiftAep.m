@@ -5,6 +5,7 @@ function [ Y ] = gspShiftAep( signal, shifts, U )
 
 
 x = transpose(signal);
+
 %working on energy perserving shifting
 N = length(x);
 k = 1:N;
