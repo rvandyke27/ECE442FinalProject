@@ -11,7 +11,7 @@ Vk = U(:,1:K);
 xr = Vk*transpose(C*Vk)*xs;
 figure
 stem(xr);
-title("Recovered Graph Signal");
+title("Selection Sampling Recovered Graph Signal");
 
 end
 
