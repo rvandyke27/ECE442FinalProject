@@ -1,0 +1,22 @@
+function [ yi, Vk ] = AggregationSampling( P, K, U, N, signal )
+%AggregationSampling with number of observations P, number of eigenvectors
+%used K, eigenvectors U, and number of nodes N
+%   Returns samples Vk and displays reconstructed signal
+
+E_kT = [eye(K) zeros(K,N-K)];
+C = E_kT;
+
+
+yi = zeros(K, 1);
+for i=1:K
+    shifted = gspShiftAep(signal, i, N); 
+    yi(i) = shifted(1); 
+end
+
+yi_hat = C*yi;
+
+Vk = U(:,1:K);
+
+
+end
+
