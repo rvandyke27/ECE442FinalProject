@@ -19,7 +19,10 @@ while 1
     end
     
     nums = regexp(tline,'\d+','match');
-    if length(nums)
+
+ 
+    if ~isempty(nums)
+
         if l==1
             l=0;
             G(k,2)=str2double(nums{1});  

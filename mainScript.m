@@ -226,9 +226,85 @@ timestamp = transpose(csvread(excelfile,1,0,[1 0 1616 0]));
 x = transpose(csvread(excelfile,1,1,[1 1 1616 1]));
 y = transpose(csvread(excelfile,1,2,[1 2 1616 2]));
 rssi = transpose(csvread(excelfile,1,4,[1 4 1616 4]));
-sample = 60:2:800;
+% Set RSSI values low to -100
+for i=1:length(rssi)
+    if rssi(i) == 0
+        rssi(i) = -100;
+    end
+end
+sample = 100:2:1616;
 rssi_samples = rssi(sample);
 Nodes = 1:length(rssi_samples);
-coord = [x(sample) y(sample)];
+coord = [x(sample); y(sample)];
+Ncmr = length(Nodes);
+A_cmr = zeros(length(Nodes));
+d_cmr = zeros(length(Nodes),1);
+for i=1:length(Nodes)
+    for j=1:length(Nodes)
+        
+        distance = sqrt((coord(1,i) - coord(1,j))^2 + (coord(2,i) - coord(2,j))^2);
+        if(distance > 0)
+            A_cmr(i,j) = 1/sqrt(distance);
+        end
+        
+
+    end
+end
+
+for i=1:length(A_cmr(:,1))
+ for j=1:length(A_cmr(1,:))
+     if(A_cmr(i,j) > 0)
+         d_cmr(i) = d_cmr(i) + A_cmr(i,j);    
+     end
+
+ end
+end
+
+Lcmr = diag(d_cmr) - A_cmr;
+
+%get eigenvectors (U) and eigenvalues(lambda)
+[Ucmr, lambdacmr] = eig(Lcmr);
+
+Fcmr = zeros(Ncmr, 1);
+lambda_vectorcmr = zeros(Ncmr,1);
+
+
+for i = 1:N
+    lambda_vectorcmr(i) = lambdacmr(i,i);
+end
+
+
+for i = 1:N  
+    Fcmr(i, 1) = dot(rssi_samples, Ucmr(:,i));
+end
+
+figure(7)
+stem(lambda_vectorcmr(1:length(lambda_vectorcmr)), Fcmr(1:length(Fcmr)));
+title("Graph Fourier Transform for RSSI Dataset");
+xlabel('$$\lambda_l$$','Interpreter','Latex');
+ylabel('$$\hat{f}(\lambda_l)$$','Interpreter','Latex');
+
+%reconstructed graph signal
+fcmr = zeros(Ncmr,1);
+
+%compute inverse fourier transform
+for i = 1:Ncmr
+    sum = 0;
+    for j = 1:Ncmr
+        sum = sum + Ucmr(i,j)*Fcmr(j);
+    end
+    fcmr(i) = sum;
+end
+
+%plot recovered plot 
+figure(8)
+stem(Nodes, fcmr(:,1));
+title("Recovered Graph Signal from Inverse Fourier Transform");
+xlabel("Graph Vertices, Vi");
+ylabel("f(Vi)");
+
+figure(9)
+stem(Nodes, rssi_samples(1,:))
+
 
 
