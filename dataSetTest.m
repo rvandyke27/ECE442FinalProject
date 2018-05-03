@@ -12,4 +12,6 @@ F = GFT(U, lambda, sig, N);
 
 f = iGFT(F, U, N);
 
-Vk = SelectionSampling(35, 35, U, N, sig);
+[x, xs] = SelectionSampling(35, 35, U, N, sig);
+
+[xr, y1] = AggregationSampling(35, U, lambda, N, sig);

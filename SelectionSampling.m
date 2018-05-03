@@ -1,7 +1,7 @@
-function [ xr, Vk ] = SelectionSampling( P, K, U, N, signal )
+function [ xr, xs ] = SelectionSampling( P, K, U, N, signal )
 %SelectionSampling with number of observations P, number of eigenvectors
 %used K, eigenvectors U, and number of nodes N
-%   Returns samples Vk and displays reconstructed signal
+%   Returns samples xs and displays reconstructed signal
 
 C = eye(N);
 C = C(1:P,:);
