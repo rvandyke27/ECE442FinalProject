@@ -3,6 +3,7 @@ function [ xr, xs ] = SelectionSampling( P, K, U, N, signal )
 %used K, eigenvectors U, and number of nodes N
 %   Returns samples xs and displays reconstructed signal
 
+signal = transpose(signal);
 C = eye(N);
 C = C(1:P,:);
 xs = C*signal;

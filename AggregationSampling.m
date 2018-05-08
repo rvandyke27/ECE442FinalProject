@@ -5,19 +5,22 @@ function [ xr, y1 ] = AggregationSampling( K, U, lambda, N, signal )
 
 E_kT = [eye(K) zeros(K,N-K)];
 C = E_kT;
+
 signal = transpose(signal);
 
-y1 = zeros(K, 1);
-for i=1:K
-    shifted = gspShiftAep(signal, i, U); 
-    y1(i) = shifted(1); 
+y1 = zeros(N, N);
+
+for i=1:N
+    shifted = gspShiftAep(signal, i,U); 
+    y1(i,:) = transpose(shifted);
 end
 
 y1_hat = C*y1;
 
 Vk = U(:,1:K);
 u1_hat = transpose(Vk)*transpose(E_kT(1,:));
-disp(size(u1_hat));
+
+Vk
 
 psi = zeros(N);
 for l = 1:N
@@ -26,13 +29,14 @@ for l = 1:N
     end
 end
 
-disp(size(C*transpose(psi)*transpose(E_kT)));
-disp(size(diag(u1_hat)));
-xr = Vk / (diag(u1_hat))*((C*transpose(psi)*transpose(E_kT)))\y1_hat;
-
-figure
-stem(xr);
-title("Aggregation Sampling Recovered Graph Signal");
+% disp(size(C*transpose(psi)*transpose(E_kT)));
+% disp(size(diag(u1_hat)));
+% xr = Vk / (diag(u1_hat))*((C*transpose(psi)*transpose(E_kT)))\y1_hat;
+xr = Vk*pinv(diag(u1_hat))*pinv(C*transpose(psi)*transpose(E_kT))*y1_hat;
+size(xr)
+% figure
+% stem(xr);
+% title("Aggregation Sampling Recovered Graph Signal");
 
 end
 
